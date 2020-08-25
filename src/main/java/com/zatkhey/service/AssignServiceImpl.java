@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 public class AssignServiceImpl implements AssignService {
 
     private TaskService taskService;
-@Autowired
+
+    @Autowired
     public AssignServiceImpl(TaskService taskService) {
         this.taskService = taskService;
     }

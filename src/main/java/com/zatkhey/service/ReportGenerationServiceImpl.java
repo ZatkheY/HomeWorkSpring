@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.List;
+
 @Service
 public class ReportGenerationServiceImpl implements ReportGenerationService {
 
     private TaskService taskService;
     private WorkerService workerService;
+
     @Autowired
     public ReportGenerationServiceImpl(TaskService taskService,
                                        WorkerService workerService) {

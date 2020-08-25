@@ -10,10 +10,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 public class TaskServiceImpl implements TaskService {
     private IdGenerator idGenerator;
     private TaskRepository taskRepository;
+
     @Autowired
     public TaskServiceImpl(IdGenerator idGenerator, TaskRepository taskRepository) {
         this.idGenerator = idGenerator;
