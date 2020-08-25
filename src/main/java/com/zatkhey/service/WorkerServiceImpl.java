@@ -2,14 +2,18 @@ package com.zatkhey.service;
 
 import com.zatkhey.model.Worker;
 import com.zatkhey.repository.WorkerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class WorkerServiceImpl implements WorkerService {
 
     private IdGenerator idGenerator;
     private WorkerRepository workerRepository;
 
+    @Autowired
     public WorkerServiceImpl(IdGenerator idGenerator, WorkerRepository workerRepository) {
         this.idGenerator = idGenerator;
         this.workerRepository = workerRepository;

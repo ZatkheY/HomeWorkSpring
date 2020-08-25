@@ -1,7 +1,9 @@
 package com.zatkhey.service;
 
-import java.util.UUID;
+import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+@Service
 public class IdGenertorImpl implements IdGenerator {
     @Override
     public String generateId() {

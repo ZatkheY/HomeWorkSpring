@@ -1,12 +1,13 @@
 package com.zatkhey.repository;
 
 import com.zatkhey.model.Task;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+@Repository
 public class MemoryTaskRepository implements TaskRepository {
     private Map<String, Task> taskIdToTask = new HashMap<>();
 

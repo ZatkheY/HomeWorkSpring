@@ -1,7 +1,9 @@
 package com.zatkhey.view;
 
 import com.zatkhey.model.Report;
+import org.springframework.stereotype.Component;
 
+@Component
 public class FormattedConsoleReportView implements ReportView {
 
     @Override
@@ -15,5 +17,14 @@ public class FormattedConsoleReportView implements ReportView {
                     reportEntry.getSalary().doubleValue()));
         }
         System.out.println("-----------------------------------");
+    }
+
+    @Override
+    public String generateView(Report report) {
+        String result = "";
+        for (Report.ReportEntry reportEntry : report.getEntries()) {
+            result += reportEntry.getWorker().getLastName() + "\n";
+        }
+        return result;
     }
 }

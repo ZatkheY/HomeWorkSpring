@@ -1,45 +1,57 @@
-package com.zatkhey;
+package com.zatkhey.servlet;
 
 import com.zatkhey.model.Report;
 import com.zatkhey.model.Task;
 import com.zatkhey.model.Worker;
-import com.zatkhey.service.*;
+import com.zatkhey.service.AssignService;
+import com.zatkhey.service.ReportGenerationService;
+import com.zatkhey.service.TaskService;
+import com.zatkhey.service.WorkerService;
 import com.zatkhey.view.ReportView;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Main {
-    public static void main(String[] args) {
-        ApplicationContext applicationContext =
-                new AnnotationConfigApplicationContext("com.zatkhey");
+public class myServlet extends HttpServlet {
+    private ReportGenerationService reportGenerationService;
+    private ReportView reportView;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+
+        ApplicationContext applicationContext
+                = new ClassPathXmlApplicationContext("applicationContext.xml");
 
         WorkerService workerService = applicationContext.getBean(WorkerService.class);
         TaskService taskService = applicationContext.getBean(TaskService.class);
         AssignService assignService = applicationContext.getBean(AssignService.class);
-        ReportGenerationService reportGenerationService = applicationContext.getBean(ReportGenerationService.class);
-        ReportView reportView = applicationContext.getBean(ReportView.class);
 
-        Main main = new Main();
-        main.createTestWorkers(workerService);
-        main.createTestTasks(taskService);
-        main.assignTasks(taskService, workerService, assignService);
-        Report report = main.generateReport(reportGenerationService);
-        main.showReport(report, reportView);
-
-
+        this.reportGenerationService = applicationContext.getBean(ReportGenerationService.class);
+        this.reportView = applicationContext.getBean(ReportView.class);
+        this.createTestWorkers(workerService);
+        this.createTestTasks(taskService);
+        this.assignTasks(taskService, workerService, assignService);
     }
 
-    private Report generateReport(ReportGenerationService reportGenerationService) {
-        return reportGenerationService.generateReport();
-    }
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-    private void showReport(Report report, ReportView reportView) {
-        reportView.showReport(report);
+        Report report = reportGenerationService.generateReport();
+        String printedReport = reportView.generateView(report);
+        ServletOutputStream outputStream = resp.getOutputStream();
+
+        outputStream.print(printedReport);
+        outputStream.close();
     }
 
     private void assignTasks(TaskService taskService, WorkerService workerService, AssignService assignService) {
@@ -78,4 +90,5 @@ public class Main {
                 LocalDateTime.of(2017, 2, 19, 18, 0),
                 BigDecimal.valueOf(801.0));
     }
+
 }

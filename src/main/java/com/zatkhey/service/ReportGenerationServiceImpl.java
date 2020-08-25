@@ -3,16 +3,18 @@ package com.zatkhey.service;
 import com.zatkhey.model.Report;
 import com.zatkhey.model.Task;
 import com.zatkhey.model.Worker;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.List;
-
+@Service
 public class ReportGenerationServiceImpl implements ReportGenerationService {
 
     private TaskService taskService;
     private WorkerService workerService;
-
+    @Autowired
     public ReportGenerationServiceImpl(TaskService taskService,
                                        WorkerService workerService) {
         this.taskService = taskService;

@@ -3,16 +3,18 @@ package com.zatkhey.service;
 import com.zatkhey.model.Task;
 import com.zatkhey.model.Worker;
 import com.zatkhey.repository.TaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class TaskServiceImpl implements TaskService {
     private IdGenerator idGenerator;
     private TaskRepository taskRepository;
-
+    @Autowired
     public TaskServiceImpl(IdGenerator idGenerator, TaskRepository taskRepository) {
         this.idGenerator = idGenerator;
         this.taskRepository = taskRepository;
